@@ -1,4 +1,5 @@
 %global srcname keylime
+%define _unpackaged_files_terminate_build 0
 
 Name:    keylime
 Version: 6.1.0
@@ -47,7 +48,16 @@ mkdir -p %{buildroot}/%{_sharedstatedir}/keylime
 install -pm 644 %{srcname}.conf \
     %{buildroot}%{_sysconfdir}/%{srcname}.conf
 
+# make up for the fact that py3_install installed stuff we don't want.
 
+rm %{buildroot}/usr/bin/keylime_registrar
+rm %{buildroot}/usr/bin/keylime_verifier
+rm %{buildroot}/usr/bin/keylime_webapp
+rm %{buildroot}/usr/bin/keylime_tenant
+
+# generate a new keylime agent service file
+# with the correct start interval, bursts, and users.
+# using tpmrm0 not abrmd.
 
 cat <<EOF > ./keylime_agent.service
 [Unit]
