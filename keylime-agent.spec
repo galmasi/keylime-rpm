@@ -27,6 +27,7 @@ Requires: python3-tornado
 Requires: python3-simplejson
 Requires: python3-requests
 Requires: python3-zmq
+Requires: python3-gnupg
 Requires: tpm2-tss
 Requires: tpm2-tools
 
