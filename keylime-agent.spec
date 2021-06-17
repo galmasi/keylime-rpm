@@ -87,22 +87,22 @@ cp -r ./tpm_cert_store %{buildroot}%{_sharedstatedir}/keylime/
 
 # creating tss group if he isn't already there
 if ! getent group tss >/dev/null; then
-    addgroup --system tss
+    groupadd --system tss
 fi
 
 # creating tss user if he isn't already there
 if ! getent passwd tss >/dev/null; then
-    adduser --system --ingroup tss --shell /bin/false \
+    adduser --system -g tss --shell /bin/false \
             --home /var/lib/tpm --no-create-home \
-            --gecos "TPM software stack" \
+            --comment "TPM software stack" \
             tss
 fi
 
 # creating keylime user if he isn't already there
 if ! getent passwd keylime >/dev/null; then
-    adduser --system --ingroup tss --shell /bin/false \
+    adduser --system -g tss --shell /bin/false \
             --home /var/lib/keylime --no-create-home \
-            --gecos "Keylime remote attestation" \
+            --comment "Keylime remote attestation" \
             keylime
 fi
 
@@ -120,6 +120,8 @@ if [ -d /var/lib/keylime ] && getent passwd keylime >/dev/null; then
 fi
 
 # The "keylime" user belongs to tss, and we need to give access to /sys/kernel/security/<x>
+# TODO these only work for one boot.
+
 if [ -d /sys/kernel/security/tpm0 ] ; then
     chown -R tss:tss /sys/kernel/security/tpm0
 fi
