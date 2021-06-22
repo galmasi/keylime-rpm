@@ -107,17 +107,14 @@ if ! getent passwd keylime >/dev/null; then
 fi
 
 # Create keylime operational directory
-if [ ! -d /var/lib/keylime ]; then mkdir -p /var/lib/keylime/secure
-fi
+mkdir -p /var/lib/keylime/secure
 
 # Only root can mount tmpfs with `-o` 
 if ! grep -qs '/var/lib/keylime/secure ' /proc/mounts ; then mount -t tmpfs -o size=1m,mode=0700 tmpfs /var/lib/keylime/secure
 fi
 
 # Setting owner
-if [ -d /var/lib/keylime ] && getent passwd keylime >/dev/null; then
-    chown -R keylime:tss /var/lib/keylime
-fi
+chown -R keylime:tss /var/lib/keylime
 
 # The "keylime" user belongs to tss, and we need to give access to /sys/kernel/security/<x>
 # TODO these only work for one boot.
