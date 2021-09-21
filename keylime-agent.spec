@@ -136,6 +136,8 @@ fi
 %systemd_postun_with_restart %{srcname}_agent.service
 
 %files
+%attr(-,keylime,tss) /var/lib/keylime/*
+
 %license LICENSE keylime/static/icons/ICON-LICENSE
 %doc README.md
 %{python3_sitelib}/%{srcname}-*.egg-info/
