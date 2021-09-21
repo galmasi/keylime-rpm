@@ -136,7 +136,6 @@ fi
 %systemd_postun_with_restart %{srcname}_agent.service
 
 %files
-%attr(-,keylime,tss) /var/lib/keylime/*
 
 %license LICENSE keylime/static/icons/ICON-LICENSE
 %doc README.md
@@ -152,7 +151,7 @@ fi
 %{_bindir}/%{srcname}_ima_emulator
 %config(noreplace) %{_sysconfdir}/%{srcname}.conf
 %{_unitdir}/*
-%{_sharedstatedir}/keylime/tpm_cert_store/*
+%attr(-,keylime,tss) %{_sharedstatedir}/keylime/tpm_cert_store/*
 
 %changelog
 * Wed Feb 24 2021 Luke Hinds <lhinds@redhat.com> 6.0.0-1
